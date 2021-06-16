@@ -37,6 +37,15 @@ public class Linked {
       System.out.println("null");
    }
 
+   public void print(Node head) {
+      Node temp = head;
+      while (temp != null) {
+         System.out.print(temp.data + " -> ");
+         temp = temp.next;
+      }
+      System.out.println("null");
+   }
+
    public int size() {
       return size;
    }
