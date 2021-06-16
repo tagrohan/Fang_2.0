@@ -40,7 +40,18 @@ public class BinaryTree {
       Integer[] bst = new Integer[]{50, 40, 20, null, null, 45, 43
               , null, null, null, 60, 55, null, 56, null, null, 70, null, null};
       createTree(arrSmall);
-      System.out.println(mirrorBTMulSum(root));
+      System.out.println(mirrorBTMulSumV2(root.left, root.right, 0) + (root.data * root.data));
+   }
+
+   private static int mirrorBTMulSumV2(Node left, Node right, int sum) {
+//      System.out.println(mirrorSum(root.left, root.right, 0) + (root.data * root.data));
+      if (left == null && right == null) {
+         return 0;
+      }
+
+      int leftS = mirrorBTMulSumV2(left.left, right.right, sum);
+      int rightS = mirrorBTMulSumV2(left.right, right.left, sum);
+      return leftS + rightS + (left.data * right.data);
    }
 
    // working good but we can use better approach with two pointer in inorder traversal
