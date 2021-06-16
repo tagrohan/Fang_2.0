@@ -34,10 +34,35 @@ public class BinaryTree {
       Integer[] arr = new Integer[]{50, 25, 12, null, null, 37, 30,
               null, null, null, 75, 62, null, 70, null, null, 57, null, null};
 
+      Integer[] arrSmall = new Integer[]{1, 1, 1, null, null, 1, 1,
+              null, null, null, 2, 2, null, 2, null, null, 2, null, null};
+
       Integer[] bst = new Integer[]{50, 40, 20, null, null, 45, 43
               , null, null, null, 60, 55, null, 56, null, null, 70, null, null};
-      createTree(arr);
-      leftViewOfBinaryTreeV2(root);
+      createTree(arrSmall);
+      System.out.println(mirrorBTMulSum(root));
+   }
+
+   // working good but we can use better approach with two pointer in inorder traversal
+   private static int mirrorBTMulSum(Node root) {
+      if (root == null) return -1;
+      LinkedList<Node> list = new LinkedList<>();
+      list.add(root);
+      int sum = root.data * root.data;
+      while (list.size() > 0) {
+         int size = list.size();
+         for (int i = 0; i < size / 2; i++) {
+            int mul = list.get(i).data * list.get(list.size() - i - 1).data;
+            System.out.println(list.get(list.size() - i - 1).data);
+            sum += mul;
+         }
+         for (int i = 0; i < size; i++) {
+            Node node = list.removeFirst();
+            if (node.left != null) list.add(node.left);
+            if (node.right != null) list.add(node.right);
+         }
+      }
+      return sum;
    }
 
    private static void leftViewOfBinaryTreeV2(Node root) {
