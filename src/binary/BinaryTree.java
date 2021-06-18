@@ -34,13 +34,43 @@ public class BinaryTree {
       Integer[] arr = new Integer[]{50, 25, 12, null, null, 37, 30,
               null, null, null, 75, 62, null, 70, null, null, 57, null, null};
 
-      Integer[] arrSmall = new Integer[]{1, 1, 1, null, null, 1, 1,
-              null, null, null, 2, 2, null, 2, null, null, 2, null, null};
+      Integer[] arrSmall = new Integer[]{5, 3, 2, null, null, 1, 1,
+              null, null, null, 2, 1, null, 1, null, null, 1, null, null};
 
       Integer[] bst = new Integer[]{50, 40, 20, null, null, 45, 43
               , null, null, null, 60, 55, null, 56, null, null, 70, null, null};
       createTree(arrSmall);
+      System.out.println(checkingSumEqualRoot(root));
+   }
 
+
+   // check weather sum of left and right child sub tree is equal to root or not
+   private static boolean checkingSumEqualRoot(Node root) {
+
+//      Integer[] arrSmall = new Integer[]{5, 3, 2, null, null, 1, 1,
+//              null, null, null, 2, 1, null, 1, null, null, 1, null, null};
+
+
+      if (root == null) return false;
+      Queue<Node> queue = new ArrayDeque<>();
+      queue.add(root);
+      while (!queue.isEmpty()) {
+         int size = queue.size();
+         for (int i = 0; i < size; i++) {
+            Node node = queue.remove();
+            int sum = 0;
+            if (node.left != null) {
+               queue.add(node.left);
+               sum += node.left.data;
+            }
+            if (node.right != null) {
+               queue.add(node.right);
+               sum += node.right.data;
+            }
+            if (sum != node.data && sum != 0) return false;
+         }
+      }
+      return true;
    }
 
    private static int mirrorBTMulSumV2(Node left, Node right, int sum) {
