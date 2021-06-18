@@ -40,12 +40,12 @@ public class BinaryTree {
       Integer[] bst = new Integer[]{50, 40, 20, null, null, 45, 43
               , null, null, null, 60, 55, null, 56, null, null, 70, null, null};
       createTree(arrSmall);
-      System.out.println(mirrorBTMulSumV2(root.left, root.right, 0) + (root.data * root.data));
+
    }
 
    private static int mirrorBTMulSumV2(Node left, Node right, int sum) {
 //      System.out.println(mirrorSum(root.left, root.right, 0) + (root.data * root.data));
-      if (left == null && right == null) {
+      if (left == null || right == null) {
          return 0;
       }
 
@@ -76,6 +76,7 @@ public class BinaryTree {
       return sum;
    }
 
+   // using BFS for left view of binary tree
    private static void leftViewOfBinaryTreeV2(Node root) {
       if (root == null) return;
       Queue<Node> queue = new ArrayDeque<>();
@@ -87,7 +88,7 @@ public class BinaryTree {
             if (i == 0) {
                System.out.print(node.data + " ");
             }
-            if (node.left != null) queue.add(node.left);
+            if (node.left != null) queue.add(node.left); // node.right above and left below makes it right view
             if (node.right != null) queue.add(node.right);
          }
       }
