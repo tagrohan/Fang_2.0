@@ -40,7 +40,7 @@ public class BinaryTree {
       Integer[] bst = new Integer[]{50, 40, 20, null, null, 45, 43
               , null, null, null, 60, 55, null, 56, null, null, 70, null, null};
       createTree(arrSmall);
-      System.out.println(checkingSumEqualRoot(root));
+
    }
 
 
@@ -59,15 +59,18 @@ public class BinaryTree {
          for (int i = 0; i < size; i++) {
             Node node = queue.remove();
             int sum = 0;
+            boolean isBothNull = true;
             if (node.left != null) {
                queue.add(node.left);
                sum += node.left.data;
+               isBothNull = false;
             }
             if (node.right != null) {
                queue.add(node.right);
                sum += node.right.data;
+               isBothNull = false;
             }
-            if (sum != node.data && sum != 0) return false;
+            if (sum != node.data && !isBothNull) return false;
          }
       }
       return true;
