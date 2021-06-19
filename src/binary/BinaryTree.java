@@ -35,12 +35,50 @@ public class BinaryTree {
               null, null, null, 75, 62, null, 70, null, null, 57, null, null};
 
       Integer[] arrSmall = new Integer[]{5, 3, 2, null, null, 1, 1,
-              null, null, null, 2, 1, null, 1, null, null, 1, null, null};
+              null, null, null, -20, 1, null, 1, null, null, 1, null, null};
 
       Integer[] bst = new Integer[]{50, 40, 20, null, null, 45, 43
               , null, null, null, 60, 55, null, 56, null, null, 70, null, null};
-      createTree(arrSmall);
+      Integer[] another = new Integer[]{1, 2, 4, null, null, 5, null
+              , null, 3, 6, null, null, 7, null, null};
 
+      createTree(arrSmall);
+      System.out.println(pathMax(root));
+
+   }
+//                     5
+//                  /     \
+//                 3       2
+//               /   \   /   \
+//              2     1 1     1
+//                   /   \
+//                  1     1   ans  14
+
+   //            2
+//         5 2 3 1 1
+//         sum = 2
+   private static int pathMax(Node root) {
+      if (root == null) {
+         return -1;
+      }
+      int left = pathMaxHelper(root.left);
+      int right = pathMaxHelper(root.right);
+      return left + right + root.data;
+   }
+
+
+   private static int pathMaxHelper(Node node) {
+
+      if (node == null) {
+         return 0;
+      }
+
+      int left = pathMaxHelper(node.left);
+      int right = pathMaxHelper(node.right);
+
+      int max = Integer.max(left, right);
+
+      return Math.max(max + node.data, 0);
    }
 
 
