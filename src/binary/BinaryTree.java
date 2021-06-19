@@ -44,11 +44,25 @@ public class BinaryTree {
 
       createTree(arrSmall);
 
-      System.out.println(isIdentical(root, root));
+      System.out.println(isIdenticalV2(root, root));
    }
 
+   private static boolean isIdenticalV2(Node root1, Node root2) {
+      if (root1 == null && root2 != null || root1 != null && root2 == null) {
+         return false;
+      } else if (root1 == null) {
+         return true;
+      }
+      if (root1.data == root2.data) {
+         boolean isIdeLeft = isIdentical(root1.left, root2.left);
+         boolean isIdeRight = isIdentical(root1.right, root2.right);
+         return isIdeLeft && isIdeRight;
+      }
+      return false;
+   }
 
    private static boolean isIdentical(Node root1, Node root2) {
+//      System.out.println(isIdentical(root, root));
 
       if (root1 == null && root2 != null || root1 != null && root2 == null) {
          return false;
