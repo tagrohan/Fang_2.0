@@ -2,15 +2,18 @@ package gfg_interview;
 
 public class Interview {
    public static void main(String[] args) {
-      System.out.println(power(2, 0));
+      printReverse("0001234000");
    }
 
-   private static int power(int co, int po) {
-      int res = 1;
-      for (int i = 1; i <= po; i++) {
-         res *= co;
+
+   private static void printReverse(String str) {
+      boolean firstNonZero = false;
+      for (int i = str.length() - 1; i >= 0; i--) {
+         if (str.charAt(i) != '0') firstNonZero = true;
+         if (firstNonZero) {
+            System.out.print(str.charAt(i));
+         }
       }
-      return res;
    }
 
    // moore voting algo used here to get majority
