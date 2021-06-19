@@ -43,9 +43,29 @@ public class BinaryTree {
               , null, 3, 6, null, null, 7, null, null};
 
       createTree(arrSmall);
-      System.out.println(pathMax(root));
 
+      System.out.println(isIdentical(root, root));
    }
+
+
+   private static boolean isIdentical(Node root1, Node root2) {
+
+      if (root1 == null && root2 != null || root1 != null && root2 == null) {
+         return false;
+      } else if (root1 == null) {
+         return true;
+      }
+
+      boolean isIdeLeft = isIdentical(root1.left, root2.left);
+      boolean isIdeRight = isIdentical(root1.right, root2.right);
+
+      if (!isIdeRight && isIdeLeft) {
+         return false;
+      }
+      return root1.data == root2.data;
+   }
+
+
 //                     5
 //                  /     \
 //                 3       2
@@ -57,6 +77,7 @@ public class BinaryTree {
    //            2
 //         5 2 3 1 1
 //         sum = 2
+   // look like kadane's algo for BT
    private static int pathMax(Node root) {
       if (root == null) {
          return -1;
