@@ -1,12 +1,36 @@
 package gfg_interview;
 
+import java.util.Arrays;
+import java.util.Stack;
+
 public class Interview {
    public static void main(String[] args) {
-      printReverse("0001234000");
+      System.out.println(Arrays.toString(peekOfMountains(new int[]{73, 74, 75, 71, 69, 72, 76, 73})));
+   }
+
+// how from from current mountain next peek is there means index diff is stored
+   private static int[] peekOfMountains(int[] arr) {
+//      System.out.println(Arrays.toString(peekOfMountains(new int[]{73, 74, 75, 71, 69, 72, 76, 73})));
+      int len = arr.length;
+      int[] res = new int[len];
+      Stack<Integer> stack = new Stack<>();
+      for (int i = len - 1; i >= 0; i--) {
+         while (!stack.isEmpty() && arr[stack.peek()] < arr[i]) {
+            stack.pop();
+         }
+         if (stack.isEmpty()) {
+            res[i] = 0;
+         } else {
+            res[i] = stack.peek() - i;
+         }
+         stack.push(i);
+      }
+      return res;
    }
 
 
    private static void printReverse(String str) {
+//      printReverse("0001234000");
       boolean firstNonZero = false;
       for (int i = str.length() - 1; i >= 0; i--) {
          if (str.charAt(i) != '0') firstNonZero = true;
