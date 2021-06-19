@@ -35,17 +35,104 @@ public class BinaryTree {
               null, null, null, 75, 62, null, 70, null, null, 57, null, null};
 
       Integer[] arrSmall = new Integer[]{5, 3, 2, null, null, 1, 1,
-              null, null, null, -20, 1, null, 1, null, null, 1, null, null};
+              null, null, null, 2, 1, null, 1, null, null, 1, null, null};
 
       Integer[] bst = new Integer[]{50, 40, 20, null, null, 45, 43
               , null, null, null, 60, 55, null, 56, null, null, 70, null, null};
       Integer[] another = new Integer[]{1, 2, 4, null, null, 5, null
               , null, 3, 6, null, null, 7, null, null};
 
-      createTree(arrSmall);
+      createTree(another);
 
-      System.out.println(isIdenticalV2(root, root));
+      printKLevelNodes(root, 3);
+      System.out.println();
+      printKLevelNodesV2AtAGivenNode(root, 4);
+
    }
+
+   private static void printKLevelNodesV2AtAGivenNode(Node root, int data) {
+      if (root.data == data) {
+         System.out.println(root.data);
+         return;
+      }
+
+      Queue<Node> queue = new ArrayDeque<>();
+      boolean trigger = false;
+      boolean toTrigger = false;
+      queue.add(root);
+      while (!queue.isEmpty()) {
+         int size = queue.size();
+         if (toTrigger) {
+            trigger = true;
+         }
+         for (int i = 0; i < size; i++) {
+            Node node = queue.remove();
+            if (trigger) {
+               System.out.print(node.data + " ");
+            }
+
+            if (node.left != null) {
+               queue.add(node.left);
+               if (node.left.data == data) toTrigger = true;
+            }
+            if (node.right != null) {
+               queue.add(node.right);
+               if (node.right.data == data) toTrigger = true;
+            }
+         }
+         if (trigger) {
+            return;
+         }
+      }
+   }
+
+   private static void printKLevelNodes(Node root, int k) {
+      Queue<Node> queue = new ArrayDeque<>();
+      queue.add(root);
+      while (!queue.isEmpty()) {
+         int size = queue.size();
+         k--;
+         for (int i = 0; i < size; i++) {
+            Node node = queue.remove();
+            if (k == 0) {
+               System.out.print(node.data + " ");
+            }
+
+            if (node.left != null) {
+               queue.add(node.left);
+            }
+            if (node.right != null) {
+               queue.add(node.right);
+            }
+         }
+      }
+   }
+
+//   private static Map<Integer, List<Integer>> levelValuesToKey(Node root, int[] arr) {
+//      int level = 0;
+//      Map<Integer, List<Integer>> map = new HashMap<>();
+//      for (int val : arr) {
+//         map.put(val, new ArrayList<>());
+//      }
+//      Queue<Node> queue = new ArrayDeque<>();
+//      queue.add(root);
+//      while (!queue.isEmpty()) {
+//         int size = queue.size();
+//         for (int i = 0; i < size; i++) {
+//            Node node = queue.remove();
+//            if (node.left != null) {
+//               if (map.containsKey(node.left.data)) {
+//
+//               }
+//            }
+//            if (node.right != null) {
+//               if (map.containsKey(node.right.data)) {
+//
+//               }
+//            }
+//         }
+//      }
+//   }
 
    private static boolean isIdenticalV2(Node root1, Node root2) {
       if (root1 == null && root2 != null || root1 != null && root2 == null) {
