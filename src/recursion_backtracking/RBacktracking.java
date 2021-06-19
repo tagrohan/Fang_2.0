@@ -1,15 +1,15 @@
 package recursion_backtracking;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RBacktracking {
 
    public static void main(String[] args) {
 
-      System.out.println(Arrays.toString(listOfPermutaionInString("abc", "").toArray()));
+
    }
+
 
 
    private static void printAbbreviation(String str) {
