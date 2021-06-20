@@ -39,15 +39,38 @@ public class BinaryTree {
       Integer[] another = new Integer[]{1, 2, null, 5, 8, null, null, null,
               3, 6, null, 7, null, null, null};
 
-      createTree(another);
+      createTree(arr);
+      Heights heights =
+              timeTakenToBurnWholeTreeFromGivenNode(root, new Node(50));
+      System.out.println(heights.treeHeight + heights.nodeHeight - 2);
+   }
 
-      for (Integer i : getBoundaries(root)) {
-         System.out.print(i + " ");
+   private static Heights timeTakenToBurnWholeTreeFromGivenNode(Node root, Node from) {
+      if (root == null) {
+         return new Heights();
       }
+      Heights left = timeTakenToBurnWholeTreeFromGivenNode(root.left, from);
+      Heights right = timeTakenToBurnWholeTreeFromGivenNode(root.right, from);
+      Heights heights = new Heights();
+      if (left.nodeHeight > 0 || right.nodeHeight > 0) {
+         heights.nodeHeight = Math.max(left.nodeHeight, right.nodeHeight) + 1;
+      }
+      if (root.data == from.data) {
+         heights.nodeHeight = 1;
+      }
+      heights.treeHeight = Math.max(left.treeHeight, right.treeHeight) + 1;
+      return heights;
+   }
 
+   private static class Heights {
+      int nodeHeight;
+      int treeHeight;
    }
 
    private static List<Integer> getBoundaries(Node root) {
+//      for (Integer i : getBoundaries(root)) {
+//         System.out.print(i + " ");
+//      }
       List<Integer> list = new ArrayList<>();
       list.add(root.data);
       getBoundariesHelperRightLeft(root.left, true, list);
