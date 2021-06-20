@@ -36,13 +36,52 @@ public class BinaryTree {
 
       Integer[] bst = new Integer[]{50, 40, 20, null, null, 45, 43
               , null, null, null, 60, 55, null, 56, null, null, 70, null, null};
-      Integer[] another = new Integer[]{1, 2, 4, null, null, 5, null
-              , null, 3, 6, null, null, 7, null, null};
+      Integer[] another = new Integer[]{1, 2, null, 5, 8, null, null, null,
+              3, 6, null, 7, null, null, null};
 
       createTree(another);
 
-      for (Integer i : getPyramidOfTree(root)) {
+      for (Integer i : getBoundaries(root)) {
          System.out.print(i + " ");
+      }
+
+   }
+
+   private static List<Integer> getBoundaries(Node root) {
+      List<Integer> list = new ArrayList<>();
+      list.add(root.data);
+      getBoundariesHelperRightLeft(root.left, true, list);
+      getBoundariesHelperLeaf(root, list);
+      getBoundariesHelperRightLeft(root.right, false, list);
+      return list;
+   }
+
+   private static void getBoundariesHelperLeaf(Node node, List<Integer> list) {
+      if (node == null) {
+         return;
+      }
+      if (node.left == null && node.right == null) list.add(node.data);
+      getBoundariesHelperLeaf(node.left, list);
+      getBoundariesHelperLeaf(node.right, list);
+   }
+
+   private static void getBoundariesHelperRightLeft(Node node, boolean isLeft, List<Integer> list) {
+      if (node == null) {
+         return;
+      }
+      if (isLeft) {
+         if (node.left != null || node.right != null) list.add(node.data);
+         if (node.left == null && node.right != null) {
+            getBoundariesHelperRightLeft(node.right, isLeft, list);
+         }
+         getBoundariesHelperRightLeft(node.left, isLeft, list);
+
+      } else {
+         if (node.right == null && node.left != null) {
+            getBoundariesHelperRightLeft(node.left, isLeft, list);
+         }
+         getBoundariesHelperRightLeft(node.right, isLeft, list);
+         if (node.left != null || node.right != null) list.add(node.data);
       }
 
    }
@@ -50,6 +89,9 @@ public class BinaryTree {
 
    // basically outer boundaries left then right
    private static List<Integer> getPyramidOfTree(Node root) {
+//      for (Integer i : getPyramidOfTree(root)) {
+//         System.out.print(i + " ");
+//      }
       List<Integer> list = new ArrayList<>();
       if (root == null) {
          return list;
