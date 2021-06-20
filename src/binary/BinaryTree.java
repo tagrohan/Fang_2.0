@@ -1,9 +1,6 @@
 package binary;
 
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class BinaryTree {
    public static Node root;
@@ -44,11 +41,40 @@ public class BinaryTree {
 
       createTree(another);
 
-      printKLevelNodes(root, 3);
-      System.out.println();
-      printKLevelNodesV2AtAGivenNode(root, 4);
+      for (Integer i : getPyramidOfTree(root)) {
+         System.out.print(i + " ");
+      }
 
    }
+
+
+   // basically outer boundaries left then right
+   private static List<Integer> getPyramidOfTree(Node root) {
+      List<Integer> list = new ArrayList<>();
+      if (root == null) {
+         return list;
+      }
+
+      getPyramidOfTreeHelper(root.left, true, list);
+      list.add(root.data);
+      getPyramidOfTreeHelper(root.right, false, list);
+      return list;
+   }
+
+   private static void getPyramidOfTreeHelper(Node node, boolean isLeft, List<Integer> list) {
+      if (node == null) {
+         return;
+      }
+
+      if (isLeft) {
+         getPyramidOfTreeHelper(node.left, isLeft, list);
+         list.add(node.data);
+      } else {
+         list.add(node.data);
+         getPyramidOfTreeHelper(node.right, isLeft, list);
+      }
+   }
+
 
    private static void printKLevelNodesV2AtAGivenNode(Node root, int data) {
       if (root.data == data) {
